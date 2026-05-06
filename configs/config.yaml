@@ -1,0 +1,49 @@
+# Configuration File
+project:
+  name: "Lecture Video Summarization"
+  version: "1.0.0"
+  author: "Mobina Abdul Rauf"
+
+dataset:
+  raw_data_path: "data/raw_videos"
+  processed_path: "data/processed"
+  features_path: "data/features"
+  video_format: ".mp4"
+  max_videos: 100
+  fps: 30
+
+preprocessing:
+  color_space: "YCbCr"
+  shot_threshold: 0.5
+  extract_frames: true
+  frame_skip: 1
+
+features:
+  video_features: ["SLBT", "LTP", "HoG", "LOOP", "LVP"]
+  audio_features: ["BFCC", "MFCC", "zero_crossing", "spectral_flux", "spectral_centroid", "spectral_bandwidth"]
+  mfcc_coefficients: 13
+  n_fft: 2048
+  hop_length: 512
+
+model:
+  name: "DRN"
+  architecture:
+    input_channels: 295
+    num_classes: 2
+    num_residual_blocks: 5
+  training:
+    batch_size: 16
+    epochs: 50
+    learning_rate: 0.001
+    train_ratio: 0.7
+    val_ratio: 0.15
+    test_ratio: 0.15
+
+output:
+  log_level: "INFO"
+  save_frames: true
+  save_features: true
+
+hardware:
+  device: "cuda"
+  num_workers: 4
